@@ -1,5 +1,6 @@
 package com.morticia.android.applicationproj;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,8 @@ public class WeightStack {
         this.weightImage = img;
         this.weight = weight;
         this.imageResource = imageResource;
+
+
 
         checkPlates();
     }
@@ -66,6 +69,10 @@ public class WeightStack {
         else if(quantity == 1){
             weightImage.setImageResource(imageResource);
         }
+    }
+
+    public void setTypeFace(Context context){
+        FontUtil.setNoType(displayAmnt, context);
     }
 
 }

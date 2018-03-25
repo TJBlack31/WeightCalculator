@@ -42,48 +42,12 @@ public class WeightDisplay extends Fragment {
 
 
 
-    TextView fortyfiveTV ;
-    TextView thirtyfiveTV;
-    TextView twentyfiveTV;
-    TextView tenTV;
-    TextView fiveTV ;
-    TextView twopntfiveTV;
 
-    LinearLayout fortyfiveLL;
-    LinearLayout thirtyfiveLL;
-    LinearLayout twentyfiveLL;
-    LinearLayout tenLL;
-    LinearLayout fiveLL ;
-    LinearLayout twopntfiveLL;
 
     public WeightDisplay() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WeightDisplay.
-     */
-    // TODO: Rename and change types and number of parameters
-//    public static WeightDisplay newInstance(int fortyFives, int twentyFives, int thirtyFives,
-//             int tens,
-//             int fives,
-//             int twoPntFives ) {
-//        WeightDisplay fragment = new WeightDisplay();
-//        Bundle args = new Bundle();
-//        args.putInt(PARAM45, fortyFives);
-//        args.putInt(PARAM35, thirtyFives);
-//        args.putInt(PARAM25, twentyFives);
-//        args.putInt(PARAM10, tens);
-//        args.putInt(PARAM5, fives);
-//        args.putInt(PARAM2pnt5, twoPntFives);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     public static WeightDisplay newInstance(int fortyFives, int thirtyFives, int twentyFives,
                                             int tens,
@@ -110,7 +74,6 @@ public class WeightDisplay extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_weight_display, container, false);
 
@@ -138,41 +101,17 @@ public class WeightDisplay extends Fragment {
                     (TextView)view.findViewById(R.id.tv2_5lb), (LinearLayout)view.findViewById(R.id.linearLayout2pnt5lb),
                     (ImageView) view.findViewById(R.id.imageView2pnt5), "twoPntFive", R.drawable.plates2pnt5x1));
 
+            changeNoType(weightStackHashMap);
         }
-
-//
-//        fortyfiveTV = view.findViewById(R.id.tv45lb);
-//        thirtyfiveTV = view.findViewById(R.id.tv35lb);
-//        twentyfiveTV = view.findViewById(R.id.tv25lb);
-//        tenTV = view.findViewById(R.id.tv10lb);
-//        fiveTV = view.findViewById(R.id.tv5lb);
-//        twopntfiveTV = view.findViewById(R.id.tv2_5lb);
-//
-//        fortyfiveLL = view.findViewById(R.id.linearLayout45lb);
-//        thirtyfiveLL = view.findViewById(R.id.linearLayout35lb);
-//        twentyfiveLL = view.findViewById(R.id.linearLayout25lb);
-//        tenLL = view.findViewById(R.id.linearLayout10lb);
-//        fiveLL = view.findViewById(R.id.linearLayout5lb);
-//        twopntfiveLL = view.findViewById(R.id.linearLayout2pnt5lb);
-
-//
-//        fortyfiveTV.setText(Integer.toString(fortyFives));
-//        thirtyfiveTV.setText(Integer.toString(thirtyFives));
-//        twentyfiveTV.setText(Integer.toString(twentyFives));
-//        tenTV.setText(Integer.toString(tens));
-//        fiveTV.setText(Integer.toString(fives));
-//        twopntfiveTV.setText(Integer.toString(twoPntFives));
-
-
-
 
         return view;
     }
 
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-
+    private void changeNoType(HashMap<String, WeightStack> hash){
+        for(WeightStack weightStack : hash.values()){
+            weightStack.setTypeFace(this.getContext());
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -188,9 +127,4 @@ public class WeightDisplay extends Fragment {
 
     }
 
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
