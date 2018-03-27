@@ -1,14 +1,13 @@
 package com.morticia.android.applicationproj;
 
+import java.util.HashMap;
+
 /**
  * Created by Morticia on 3/20/18.
  */
 
 public class WeightCalculator {
 
-
-
-    boolean is35Available;
     double lowestWeight;
     double barWeight;
     int plates45;
@@ -19,10 +18,18 @@ public class WeightCalculator {
     int plates2pnt5;
     int weightNoBarHalf;
 
-    public WeightCalculator(double lowestWeight, double barWeight, boolean is35Available){
+    public static final String[] WEIGHTS = new String[]{"FORTYFIVES", "THIRTYFIVES", "TWENTYFIVES",
+            "TENS","FIVES", "TWOPNTFIVES" } ;
+
+
+
+    public static HashMap<String, Integer> weightsUsed;
+
+    public WeightCalculator(double lowestWeight, double barWeight, HashMap<String, Integer> availableWeights){
         this.lowestWeight = lowestWeight;
         this.barWeight = barWeight;
-        this.is35Available = is35Available;
+        this.weightsUsed = availableWeights;
+
 
     }
 
@@ -30,33 +37,22 @@ public class WeightCalculator {
 
         this.weightNoBarHalf = (weight - (int) this.barWeight) / 2;
 
-        if(isPlateDvsbl(45)){
-            this.plates45 = weightNoBarHalf/45;
-            this.weightNoBarHalf = weightNoBarHalf % 45;
-        }
-        if(isPlateDvsbl(35) && is35Available){
-            this.plates35 = weightNoBarHalf/35;
-            this.weightNoBarHalf = weightNoBarHalf % 35;
-        }
-        if(isPlateDvsbl(25)){
-            this.plates25 = weightNoBarHalf/25;
-            this.weightNoBarHalf = weightNoBarHalf % 25;
-        }
-        if(isPlateDvsbl(10)){
-            this.plates10 = weightNoBarHalf/10;
-            this.weightNoBarHalf = weightNoBarHalf % 10;
-        }
-        if(isPlateDvsbl(5)){
-            this.plates5 = weightNoBarHalf/5;
-            this.weightNoBarHalf = weightNoBarHalf % 5;
-        }
-        if(weightNoBarHalf <= 2.5 && weightNoBarHalf > 0){
-            this.plates2pnt5 = 1;
-        }
-
+        trimAmount(WEIGHTS[0], 45);
+        trimAmount(WEIGHTS[1], 35);
+        trimAmount(WEIGHTS[2], 25);
+        trimAmount(WEIGHTS[3], 10);
+        trimAmount(WEIGHTS[4], 5);
+        trimAmount(WEIGHTS[5], 2);
 
         System.out.println(plates45 + " " + plates35 + " " + plates25 + " " + plates10 + " " + plates5 + " " + plates2pnt5 + " " );
 
+    }
+    private void trimAmount(String key, int amount){
+        if(isPlateDvsbl(amount)){
+            configure(amount, key);
+        }else{
+            weightsUsed.put(key, 0);
+        }
     }
 
     private boolean isPlateDvsbl(int plateWeight ){
@@ -69,29 +65,40 @@ public class WeightCalculator {
     }
 
     public int getPlates45() {
-        return plates45;
+        return weightsUsed.get(WEIGHTS[0]);
+    }
+
+
+    private void configure(int amount, String key){
+        int availablePlates = weightsUsed.get(key);
+        int divisiblePlatesNeeded = weightNoBarHalf/amount;
+        if (divisiblePlatesNeeded > availablePlates){
+            this.weightNoBarHalf = weightNoBarHalf - (availablePlates * amount);
+        }
+        else {
+            this.weightNoBarHalf = weightNoBarHalf % amount;
+            weightsUsed.put(key, divisiblePlatesNeeded);
+        }
     }
 
     public int getPlates35() {
-        return plates35;
+        return weightsUsed.get(WEIGHTS[1]);
     }
 
     public int getPlates25() {
-        return plates25;
+        return weightsUsed.get(WEIGHTS[2]);
     }
 
     public int getPlates10() {
-        return plates10;
+        return weightsUsed.get(WEIGHTS[3]);
     }
 
     public int getPlates5() {
-        return plates5;
+        return weightsUsed.get(WEIGHTS[4]);
     }
 
     public int getPlates2pnt5() {
-        return plates2pnt5;
+        return weightsUsed.get(WEIGHTS[5]);
     }
-
-
 
 }

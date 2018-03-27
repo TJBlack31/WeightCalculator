@@ -14,17 +14,8 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WeightDisplay.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WeightDisplay#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class WeightDisplay extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String PARAM45 = "FRTYFVE";
     private static final String PARAM35 = "THRTFVE";
     private static final String PARAM25 = "TWNTFVE";
@@ -32,22 +23,9 @@ public class WeightDisplay extends Fragment {
     private static final String PARAM5 = "FIVE";
     private static final String PARAM2pnt5 = "TWPNTFVE";
 
-    // TODO: Rename and change types of parameters
-//    private WeightStack fortyFives;
-//    private WeightStack twentyFives;
-//    private WeightStack thirtyFives;
-//    private WeightStack tens;
-//    private WeightStack fives;
-//    private WeightStack twoPntFives;
-
-
-
-
-
     public WeightDisplay() {
 
     }
-
 
     public static WeightDisplay newInstance(int fortyFives, int thirtyFives, int twentyFives,
                                             int tens,

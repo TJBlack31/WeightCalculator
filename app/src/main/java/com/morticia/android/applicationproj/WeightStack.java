@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 /**
  * Created by Morticia on 3/22/18.
  */
@@ -17,6 +19,7 @@ public class WeightStack {
     LinearLayout linearLayout;
     ImageView weightImage;
     public String weight;
+
     int imageResource;
 
     public WeightStack(int quantity, TextView textView, LinearLayout linearLayout, ImageView img, String weight, int imageResource){
@@ -26,8 +29,6 @@ public class WeightStack {
         this.weightImage = img;
         this.weight = weight;
         this.imageResource = imageResource;
-
-
 
         checkPlates();
     }
@@ -74,5 +75,6 @@ public class WeightStack {
     public void setTypeFace(Context context){
         FontUtil.setNoType(displayAmnt, context);
     }
+
 
 }

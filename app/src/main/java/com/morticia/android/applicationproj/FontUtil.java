@@ -2,6 +2,7 @@ package com.morticia.android.applicationproj;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ public class FontUtil {
         Typeface type = Typeface.createFromAsset(context.getAssets(),"fonts/built titling sb.ttf");
         textView.setTypeface(type);
     }
-    public static void setTextType(Switch switchTxt, Context context){
+    public static void setTextType(Button switchTxt, Context context){
         Typeface type = Typeface.createFromAsset(context.getAssets(),"fonts/built titling sb.ttf");
         switchTxt.setTypeface(type);
     }

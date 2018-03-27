@@ -57,11 +57,11 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <Switch
-                    android:id="@+id/available35"
+                <Button
+                    android:id="@+id/availableWeights"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="35lb plate available" />
+                    android:text="Change Available Weights" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

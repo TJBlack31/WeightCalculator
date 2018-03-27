@@ -18,6 +18,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText weightAmount;
@@ -26,26 +28,36 @@ public class MainActivity extends AppCompatActivity {
     boolean isDisplayed;
     WeightDisplay newFragment;
     TextView weightLabel;
-    Switch is35Available;
+    Button changeAvailableWeights;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         weightLabel = findViewById(R.id.weightLabel);
-        is35Available = findViewById(R.id.available35);
+        changeAvailableWeights = findViewById(R.id.availableWeights);
         weightAmount = findViewById(R.id.weightAmount);
 
         FontUtil.setTextType(weightLabel, this);
-        FontUtil.setTextType(is35Available, this);
+        FontUtil.setTextType(changeAvailableWeights, this);
         FontUtil.setNoType(weightAmount, this);
+
+        checkFirstTime();
 
         weightAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    System.out.println("done clicked");
                     onDoneClicked();
                 }
                 return false;
+            }
+        });
+
+        changeAvailableWeights.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEditDialog();
             }
         });
     }
@@ -59,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
             FrameLayout layout = findViewById(R.id.frag);
             layout.removeAllViewsInLayout();
-            WeightCalculator weightCalculator = new WeightCalculator(2.5, 45, is35Available.isChecked());
+            WeightCalculator weightCalculator = new WeightCalculator(2.5, 45, getAvailablePlates());
+
             weightCalculator.configurePlates(Integer.parseInt(weightAmount.getText().toString()));
 
             newFragment = WeightDisplay.newInstance(weightCalculator.getPlates45(), weightCalculator.getPlates35(),
@@ -76,5 +89,30 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
             isDisplayed = true;
         }
+    }
+
+    private void showEditDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        EditWeightsDialog editWeightsDialog = new EditWeightsDialog();
+        editWeightsDialog.show(fm, "fragment_edit_weights");
+    }
+
+    private void checkFirstTime(){
+        if(SharedPrefUtil.isFirstTime(this)){
+            for(String weight : WeightCalculator.WEIGHTS){
+                SharedPrefUtil.saveAvailable(weight, 10, this);
+            }
+            SharedPrefUtil.saveFirstTime(this);
+        }
+    }
+
+    private HashMap<String, Integer> getAvailablePlates(){
+        HashMap<String, Integer> plates = new HashMap<>();
+        int length = WeightCalculator.WEIGHTS.length;
+        for(int i = 0; i<length; i++){
+            String key = WeightCalculator.WEIGHTS[i];
+            plates.put(key, SharedPrefUtil.retrieveAvalable(key, this));
+        }
+        return plates;
     }
 }
