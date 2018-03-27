@@ -1,4 +1,4 @@
-package com.morticia.android.applicationproj;
+package com.travisb.android.simpleplatecalculator;
 
 import android.content.Context;
 import android.widget.Toast;

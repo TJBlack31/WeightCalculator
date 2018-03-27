@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary"
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
-    tools:context="com.morticia.android.applicationproj.MainActivity">
+    tools:context="com.morticia.android.applicationproj.com.morticia.android.simpleplatecalculator.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

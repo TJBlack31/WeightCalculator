@@ -1,12 +1,10 @@
-package com.morticia.android.applicationproj;
+package com.travisb.android.simpleplatecalculator;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.HashMap;
 
 /**
  * Created by Morticia on 3/22/18.

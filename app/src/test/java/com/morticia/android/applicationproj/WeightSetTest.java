@@ -1,5 +1,7 @@
 package com.morticia.android.applicationproj;
 
+import com.travisb.android.simpleplatecalculator.WeightCalculator;
+
 import org.junit.Test;
 
 /**

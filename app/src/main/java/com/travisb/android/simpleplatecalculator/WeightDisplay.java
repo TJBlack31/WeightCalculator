@@ -1,7 +1,6 @@
-package com.morticia.android.applicationproj;
+package com.travisb.android.simpleplatecalculator;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.morticia.android.applicationproj.R;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class WeightDisplay extends Fragment {
