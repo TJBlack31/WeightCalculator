@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
         weightLabel = findViewById(R.id.weightLabel);
         changeAvailableWeights = findViewById(R.id.availableWeights);
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 showEditDialog();
             }
         });
+
+
     }
 
     private void calculate(){

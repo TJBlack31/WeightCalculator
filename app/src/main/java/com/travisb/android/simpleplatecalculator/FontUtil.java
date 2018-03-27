@@ -22,12 +22,12 @@ public class FontUtil {
         switchTxt.setTypeface(type);
     }
     public static void setNoType(EditText editTxt, Context context){
-        Typeface type = Typeface.createFromAsset(context.getAssets(),"fonts/39smooth.ttf");
+        Typeface type = Typeface.createFromAsset(context.getAssets(),"fonts/built titling sb.ttf");
         editTxt.setTypeface(type);
     }
 
     public static void setNoType(TextView num, Context context){
-        Typeface type = Typeface.createFromAsset(context.getAssets(),"fonts/39smooth.ttf");
+        Typeface type = Typeface.createFromAsset(context.getAssets(),"fonts/built titling sb.ttf");
         num.setTypeface(type);
     }
 }

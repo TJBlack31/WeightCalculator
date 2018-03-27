@@ -12,9 +12,7 @@
         android:layout_width="match_parent"
         android:padding="16dp"
         android:layout_height="wrap_content"
-
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,16 +28,14 @@
                 android:textSize="40sp"
                 android:textColor = "@android:color/white"
                 android:text="Enter weight in lbs" />
-
             <EditText
                 android:id="@+id/weightAmount"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
                 android:textSize="40sp"
                 android:ems="10"
-
+                android:textAlignment="center"
                 android:inputType="number" />
         </LinearLayout>
 
@@ -73,8 +69,6 @@
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
-
     </LinearLayout>
 
     <FrameLayout

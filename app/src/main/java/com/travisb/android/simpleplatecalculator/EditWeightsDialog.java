@@ -57,8 +57,14 @@ public class EditWeightsDialog extends DialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 for(int i = 0; i<WeightCalculator.WEIGHTS.length; i++){
-                    SharedPrefUtil.saveAvailable(WeightCalculator.WEIGHTS[i], Integer.parseInt(editTexts[i].getText().toString()),
+                    String intString = editTexts[i].getText().toString();
+                    int value = 0;
+                    if(!intString.equals("")){
+                        value = Integer.parseInt(intString);
+                    }
+                    SharedPrefUtil.saveAvailable(WeightCalculator.WEIGHTS[i], value,
                             getContext());
 
                 }
@@ -68,8 +74,10 @@ public class EditWeightsDialog extends DialogFragment {
         });
 
 
-        getDialog().setTitle("Hello");
+        getDialog().setTitle("Edit Available Weights");
 
         return view;
     }
+
+
 }

@@ -12,13 +12,13 @@ import android.widget.TextView;
 
 public class WeightStack {
 
-    int quantity = 0;
-    TextView displayAmnt;
-    LinearLayout linearLayout;
-    ImageView weightImage;
-    public String weight;
+    private int quantity = 0;
+    private TextView displayAmnt;
+    private LinearLayout linearLayout;
+    private ImageView weightImage;
+    private String weight;
 
-    int imageResource;
+    private int imageResource;
 
     public WeightStack(int quantity, TextView textView, LinearLayout linearLayout, ImageView img, String weight, int imageResource){
         this.quantity = quantity;

@@ -12,16 +12,16 @@ import java.util.HashMap;
 public class WeightCalculator {
 
 
-    double barWeight;
+    private double barWeight;
 
-    int weightNoBarHalf;
+    private int weightNoBarHalf;
 
     public static final String[] WEIGHTS = new String[]{"FORTYFIVES", "THIRTYFIVES", "TWENTYFIVES",
             "TENS","FIVES", "TWOPNTFIVES" } ;
 
 
 
-    public static HashMap<String, Integer> weightsUsed;
+    private static HashMap<String, Integer> weightsUsed;
 
     public WeightCalculator( double barWeight, HashMap<String, Integer> availableWeights){
         this.barWeight = barWeight;
@@ -45,6 +45,26 @@ public class WeightCalculator {
             //Maybe do a callback to the activity to send a toast or something
             Toast.makeText(context, "You don't have enough weight available.  Change your available" +
                     " weights", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public boolean configurePlates(int weight){
+
+        this.weightNoBarHalf = (weight - (int) this.barWeight) / 2;
+
+        trimAmount(WEIGHTS[0], 45);
+        trimAmount(WEIGHTS[1], 35);
+        trimAmount(WEIGHTS[2], 25);
+        trimAmount(WEIGHTS[3], 10);
+        trimAmount(WEIGHTS[4], 5);
+        trimAmount(WEIGHTS[5], 2);
+
+        if(this.weightNoBarHalf > 3){
+
             return false;
         }
 
@@ -105,4 +125,7 @@ public class WeightCalculator {
         return weightsUsed.get(WEIGHTS[5]);
     }
 
+    public static HashMap<String, Integer> getWeightsUsed() {
+        return weightsUsed;
+    }
 }
