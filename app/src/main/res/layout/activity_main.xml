@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary"
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
-    tools:context="com.morticia.android.applicationproj.com.morticia.android.simpleplatecalculator.MainActivity">
+    tools:context="com.travisb.android.simpleplatecalculator.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="40sp"
+                android:textColor = "@android:color/white"
                 android:text="Enter weight in lbs" />
 
             <EditText

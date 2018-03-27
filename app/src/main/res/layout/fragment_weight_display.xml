@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:background="@color/colorPrimary"
     android:layout_height="match_parent"
-    tools:context="com.morticia.android.applicationproj.com.morticia.android.simpleplatecalculator.WeightDisplay">
+    tools:context="com.travisb.android.simpleplatecalculator.MainActivity">
 
     <!-- TODO: Update blank fragment layout -->
 

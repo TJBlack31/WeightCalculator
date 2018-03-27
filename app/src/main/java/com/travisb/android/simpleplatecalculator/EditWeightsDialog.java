@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.morticia.android.applicationproj.R;
+
 
 
 public class EditWeightsDialog extends DialogFragment {

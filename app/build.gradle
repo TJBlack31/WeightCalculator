@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.morticia.android.applicationproj"
+        applicationId "com.travisb.android.simpleplatecalculator"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1

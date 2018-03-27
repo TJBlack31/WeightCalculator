@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.morticia.android.applicationproj.R;
+
 
 import java.util.HashMap;
 
