@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,30 +58,32 @@ public class WeightDisplay extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weight_display, container, false);
 
         if (getArguments() != null) {
-            ArrayList<WeightStack> weightStacks;
 
-            weightStacks = new ArrayList<>();
+            int[] quantityPlates = new int[]{getArguments().getInt(PARAM45),
+                    getArguments().getInt(PARAM35),
+                    getArguments().getInt(PARAM25),
+                    getArguments().getInt(PARAM10),
+                    getArguments().getInt(PARAM5),
+                    getArguments().getInt(PARAM2pnt5)};
 
-            weightStacks.add( new WeightStack(getArguments().getInt(PARAM45),
-                    (TextView)view.findViewById(R.id.tv45lb), (LinearLayout)view.findViewById(R.id.linearLayout45lb),
-                    (ImageView) view.findViewById(R.id.imageView45), "fortyfive", R.drawable.plates45x1));
-            weightStacks.add( new WeightStack(getArguments().getInt(PARAM35),
-                    (TextView)view.findViewById(R.id.tv35lb), (LinearLayout)view.findViewById(R.id.linearLayout35lb),
-                    (ImageView) view.findViewById(R.id.imageView35), "thirtyfive", R.drawable.plates35x1));
-            weightStacks.add(new WeightStack(getArguments().getInt(PARAM25),
-                    (TextView)view.findViewById(R.id.tv25lb), (LinearLayout)view.findViewById(R.id.linearLayout25lb),
-                    (ImageView) view.findViewById(R.id.imageView25), "twentyfive", R.drawable.plates25x1));
-            weightStacks.add( new WeightStack(getArguments().getInt(PARAM10),
-                    (TextView)view.findViewById(R.id.tv10lb), (LinearLayout)view.findViewById(R.id.linearLayout10lb),
-                    (ImageView) view.findViewById(R.id.imageView10), "ten", R.drawable.plates10x1));
-            weightStacks.add(new WeightStack(getArguments().getInt(PARAM5),
-                    (TextView)view.findViewById(R.id.tv5lb), (LinearLayout)view.findViewById(R.id.linearLayout5lb),
-                    (ImageView) view.findViewById(R.id.imageView5), "five", R.drawable.plates5x1));
-            weightStacks.add(new WeightStack(getArguments().getInt(PARAM2pnt5),
-                    (TextView)view.findViewById(R.id.tv2_5lb), (LinearLayout)view.findViewById(R.id.linearLayout2pnt5lb),
-                    (ImageView) view.findViewById(R.id.imageView2pnt5), "twoPntFive", R.drawable.plates2pnt5x1));
+            TextView[] textViews = new TextView[]{view.findViewById(R.id.tv45lb),
+                    view.findViewById(R.id.tv35lb),
+                    view.findViewById(R.id.tv25lb),
+                    view.findViewById(R.id.tv10lb),
+                    view.findViewById(R.id.tv5lb),
+                    view.findViewById(R.id.tv2_5lb)};
 
-            changeNoType(weightStacks);
+            LinearLayout[] linearLayouts = new LinearLayout[]{view.findViewById(R.id.linearLayout45lb),
+                    view.findViewById(R.id.linearLayout35lb),
+                    view.findViewById(R.id.linearLayout25lb),
+                    view.findViewById(R.id.linearLayout10lb),
+                    view.findViewById(R.id.linearLayout5lb),
+                    view.findViewById(R.id.linearLayout2pnt5lb)};
+
+            setViews(textViews, linearLayouts, quantityPlates);
+
+            changeNoType(textViews);
+
             TextView displayHeader = view.findViewById(R.id.displayHeader);
             FontUtil.setTextType(displayHeader, getContext());
         }
@@ -88,9 +91,9 @@ public class WeightDisplay extends Fragment {
         return view;
     }
 
-    private void changeNoType(ArrayList<WeightStack> array){
-        for(WeightStack weightStack : array){
-            weightStack.setTypeFace(this.getContext());
+    private void changeNoType(TextView[] array){
+        for(int i = 0; i<array.length; i++){
+            FontUtil.setTextType(array[i],this.getContext());
         }
     }
 
@@ -107,5 +110,15 @@ public class WeightDisplay extends Fragment {
 
 
     }
-
+    private void setViews(TextView[]textViews, LinearLayout[]linearLayouts,
+                          int[] quantityPlates){
+        for(int i = 0; i<quantityPlates.length; i++){
+           if(quantityPlates[i]==0){
+               linearLayouts[i].removeAllViews();
+               linearLayouts[i].setVisibility(View.GONE);
+           }else{
+               textViews[i].setText(Integer.toString(quantityPlates[i]));
+           }
+        }
+    }
 }
