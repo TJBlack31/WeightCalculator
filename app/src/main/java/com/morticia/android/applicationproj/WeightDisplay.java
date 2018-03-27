@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -56,37 +57,39 @@ public class WeightDisplay extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weight_display, container, false);
 
         if (getArguments() != null) {
-            HashMap<String, WeightStack> weightStackHashMap;
+            ArrayList<WeightStack> weightStacks;
 
-            weightStackHashMap = new HashMap<>();
+            weightStacks = new ArrayList<>();
 
-            weightStackHashMap.put("fortyFives", new WeightStack(getArguments().getInt(PARAM45),
+            weightStacks.add( new WeightStack(getArguments().getInt(PARAM45),
                     (TextView)view.findViewById(R.id.tv45lb), (LinearLayout)view.findViewById(R.id.linearLayout45lb),
                     (ImageView) view.findViewById(R.id.imageView45), "fortyfive", R.drawable.plates45x1));
-            weightStackHashMap.put("thirtyFives", new WeightStack(getArguments().getInt(PARAM35),
+            weightStacks.add( new WeightStack(getArguments().getInt(PARAM35),
                     (TextView)view.findViewById(R.id.tv35lb), (LinearLayout)view.findViewById(R.id.linearLayout35lb),
                     (ImageView) view.findViewById(R.id.imageView35), "thirtyfive", R.drawable.plates35x1));
-            weightStackHashMap.put("twentyFives", new WeightStack(getArguments().getInt(PARAM25),
+            weightStacks.add(new WeightStack(getArguments().getInt(PARAM25),
                     (TextView)view.findViewById(R.id.tv25lb), (LinearLayout)view.findViewById(R.id.linearLayout25lb),
                     (ImageView) view.findViewById(R.id.imageView25), "twentyfive", R.drawable.plates25x1));
-            weightStackHashMap.put("tens", new WeightStack(getArguments().getInt(PARAM10),
+            weightStacks.add( new WeightStack(getArguments().getInt(PARAM10),
                     (TextView)view.findViewById(R.id.tv10lb), (LinearLayout)view.findViewById(R.id.linearLayout10lb),
                     (ImageView) view.findViewById(R.id.imageView10), "ten", R.drawable.plates10x1));
-            weightStackHashMap.put("fives", new WeightStack(getArguments().getInt(PARAM5),
+            weightStacks.add(new WeightStack(getArguments().getInt(PARAM5),
                     (TextView)view.findViewById(R.id.tv5lb), (LinearLayout)view.findViewById(R.id.linearLayout5lb),
                     (ImageView) view.findViewById(R.id.imageView5), "five", R.drawable.plates5x1));
-            weightStackHashMap.put("twoPntFives", new WeightStack(getArguments().getInt(PARAM2pnt5),
+            weightStacks.add(new WeightStack(getArguments().getInt(PARAM2pnt5),
                     (TextView)view.findViewById(R.id.tv2_5lb), (LinearLayout)view.findViewById(R.id.linearLayout2pnt5lb),
                     (ImageView) view.findViewById(R.id.imageView2pnt5), "twoPntFive", R.drawable.plates2pnt5x1));
 
-            changeNoType(weightStackHashMap);
+            changeNoType(weightStacks);
+            TextView displayHeader = view.findViewById(R.id.displayHeader);
+            FontUtil.setTextType(displayHeader, getContext());
         }
 
         return view;
     }
 
-    private void changeNoType(HashMap<String, WeightStack> hash){
-        for(WeightStack weightStack : hash.values()){
+    private void changeNoType(ArrayList<WeightStack> array){
+        for(WeightStack weightStack : array){
             weightStack.setTypeFace(this.getContext());
         }
     }

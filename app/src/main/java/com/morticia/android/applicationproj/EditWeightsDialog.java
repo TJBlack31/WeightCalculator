@@ -10,22 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class EditWeightsDialog extends DialogFragment {
 
     private Button saveButton;
     EditText[] editTexts;
-//    private EditText fortyFives;
-//    private EditText thirtyFives;
-//    private EditText twentyFives;
-//    private EditText tens;
-//    private EditText fives;
-//    private EditText twoPntFives;
-
+    TextView[] textViews;
 
     public EditWeightsDialog() {
-        // Empty constructor required for DialogFragment
+
     }
 
     @Override
@@ -38,11 +33,27 @@ public class EditWeightsDialog extends DialogFragment {
                 view.findViewById(R.id.edit_weights25),
                 view.findViewById(R.id.edit_weights10),
                 view.findViewById(R.id.edit_weights5),
-                view.findViewById(R.id.edit_weights2pnt5)};
+                view.findViewById(R.id.edit_weights2pnt5),
+                view.findViewById(R.id.editBarWeight_editTxt)};
+        textViews = new TextView[]{view.findViewById(R.id.edit45txtview), view.findViewById(R.id.edit35txtview),
+                view.findViewById(R.id.edit25txtview),
+                view.findViewById(R.id.edit10txtview),
+                view.findViewById(R.id.edit5txtview),
+                view.findViewById(R.id.edit2pnt5txtview),
+                view.findViewById(R.id.editbarweight_txtview)};
 
         for(int i = 0; i<WeightCalculator.WEIGHTS.length; i++){
             editTexts[i].setText(Integer.toString(SharedPrefUtil.retrieveAvalable(WeightCalculator.WEIGHTS[i], getContext())));
+
         }
+        for(int i = 0; i<textViews.length; i++){
+            FontUtil.setNoType(editTexts[i], getContext());
+            FontUtil.setTextType(textViews[i], getContext());
+            if(i==textViews.length-1){
+                editTexts[i].setText(Integer.toString(SharedPrefUtil.retrieveBar(getContext())));
+            }
+        }
+        FontUtil.setTextType(saveButton, getContext());
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +61,9 @@ public class EditWeightsDialog extends DialogFragment {
                 for(int i = 0; i<WeightCalculator.WEIGHTS.length; i++){
                     SharedPrefUtil.saveAvailable(WeightCalculator.WEIGHTS[i], Integer.parseInt(editTexts[i].getText().toString()),
                             getContext());
+
                 }
+                SharedPrefUtil.saveBar(Integer.parseInt(editTexts[editTexts.length-1].getText().toString()), getContext());
                 dismiss();
             }
         });

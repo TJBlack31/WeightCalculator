@@ -1,5 +1,8 @@
 package com.morticia.android.applicationproj;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.util.HashMap;
 
 /**
@@ -8,14 +11,9 @@ import java.util.HashMap;
 
 public class WeightCalculator {
 
-    double lowestWeight;
+
     double barWeight;
-    int plates45;
-    int plates35;
-    int plates25;
-    int plates10;
-    int plates5;
-    int plates2pnt5;
+
     int weightNoBarHalf;
 
     public static final String[] WEIGHTS = new String[]{"FORTYFIVES", "THIRTYFIVES", "TWENTYFIVES",
@@ -25,15 +23,14 @@ public class WeightCalculator {
 
     public static HashMap<String, Integer> weightsUsed;
 
-    public WeightCalculator(double lowestWeight, double barWeight, HashMap<String, Integer> availableWeights){
-        this.lowestWeight = lowestWeight;
+    public WeightCalculator( double barWeight, HashMap<String, Integer> availableWeights){
         this.barWeight = barWeight;
         this.weightsUsed = availableWeights;
 
 
     }
 
-    public void configurePlates(int weight){
+    public boolean configurePlates(int weight, Context context){
 
         this.weightNoBarHalf = (weight - (int) this.barWeight) / 2;
 
@@ -44,8 +41,15 @@ public class WeightCalculator {
         trimAmount(WEIGHTS[4], 5);
         trimAmount(WEIGHTS[5], 2);
 
-        System.out.println(plates45 + " " + plates35 + " " + plates25 + " " + plates10 + " " + plates5 + " " + plates2pnt5 + " " );
+        if(this.weightNoBarHalf > 3){
+            //Maybe do a callback to the activity to send a toast or something
+            Toast.makeText(context, "You don't have enough weight available.  Change your available" +
+                    " weights", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
+
+        return true;
     }
     private void trimAmount(String key, int amount){
         if(isPlateDvsbl(amount)){
