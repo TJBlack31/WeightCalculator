@@ -4,7 +4,7 @@ This is a simple app that takes a custom amount of weight plates in pounds and r
 
 Please feel free to contribute.
 
-![alt text](http://i.imgur.com/dGIYeqZ.png)
+![alt text](http://i.imgur.com/Gm4ZgmS.jpg)
 
-![alt text](http://i.imgur.com/ogHwLx1.png)
+![alt text](http://i.imgur.com/9HpbGnc.jpg)
 
