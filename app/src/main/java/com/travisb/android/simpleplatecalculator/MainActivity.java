@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkFirstTime();
 
+        AppRater.app_launched(this);
+
         calculateWeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         weightAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    System.out.println("done clicked");
                     calculate();
                 }
                 return false;
