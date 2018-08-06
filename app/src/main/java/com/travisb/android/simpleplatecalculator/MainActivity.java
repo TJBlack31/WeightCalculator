@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
             FrameLayout layout = findViewById(R.id.frag);
             layout.removeAllViewsInLayout();
-            WeightCalculator weightCalculator = new WeightCalculator(45, getAvailablePlates());
+            WeightCalculator weightCalculator = new WeightCalculator(SharedPrefUtil.retrieveBar(this), getAvailablePlates());
 
             boolean isDisplayable = weightCalculator.configurePlates(Integer.parseInt(weightAmount.getText().toString()), this);
             if(isDisplayable) {
