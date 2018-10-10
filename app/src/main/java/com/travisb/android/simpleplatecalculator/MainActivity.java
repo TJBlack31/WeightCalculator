@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        checkFirstTime();
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
         weightLabel = findViewById(R.id.weightLabel);
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         FontUtil.setTextType(changeAvailableWeights, this);
         FontUtil.setTextType(calculateWeight, this);
         FontUtil.setNoType(weightAmount, this);
-        checkFirstTime();
+
 
 
 
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 calculateWeight.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        KeyboardUtil.hideKeyboard(MainActivity.this);
 
                         calculate(SharedPrefUtil.retrieveBar(getApplicationContext()), getAvailablePlates(), getBaseContext());
                     }
@@ -130,16 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 
 
     @Override
@@ -150,13 +143,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        hideKeyboard(this);
+
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        hideKeyboard(this);
 
     }
 
@@ -170,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
         if(newFragment != null) {
 
             getSupportFragmentManager().popBackStack();
+
             newFragment = null;
         }
        final Runnable runnable = new Runnable() {
@@ -186,9 +179,6 @@ public class MainActivity extends AppCompatActivity {
                }catch(NumberFormatException ex){ // handle your exception
 
                }
-
-
-
                if(weight<barWeight){
                    Toast toast = Toast.makeText(context,
                            "Entered weight must meet or exceed the weight of the bar!", Toast.LENGTH_LONG);
@@ -231,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
            }
        };
        runOnUiThread(runnable);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
     }
