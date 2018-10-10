@@ -72,6 +72,8 @@ public class WeightCalculator {
         return true;
     }
     private void trimAmount(String key, int amount){
+
+
         if(isPlateDvsbl(amount)){
             configure(amount, key);
         }else{
@@ -90,6 +92,33 @@ public class WeightCalculator {
 
     public int getPlates45() {
         return weightsUsed.get(WEIGHTS[0]);
+    }
+
+    public double getBarWeight() {
+        return barWeight;
+    }
+
+    public int getAvalableWeight(){
+        int weight = 0;
+        for (int i = 0; i< getPlates45() *2; i ++){
+            weight = weight + 45;
+        }
+        for (int i = 0; i< getPlates35()*2; i ++){
+            weight = weight + 35;
+        }
+        for (int i = 0; i< getPlates25()*2; i ++){
+            weight = weight + 25;
+        }
+        for (int i = 0; i< getPlates10()*2; i ++){
+            weight = weight + 10;
+        }
+        for (int i = 0; i< getPlates5()*2; i ++){
+            weight = weight + 5;
+        }
+        for (int i = 0; i< getPlates2pnt5()*2; i ++){
+            weight = weight + 5/2;
+        }
+        return weight;
     }
 
 
@@ -124,6 +153,9 @@ public class WeightCalculator {
     public int getPlates2pnt5() {
         return weightsUsed.get(WEIGHTS[5]);
     }
+
+
+
 
     public static HashMap<String, Integer> getWeightsUsed() {
         return weightsUsed;

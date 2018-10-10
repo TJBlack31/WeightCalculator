@@ -35,6 +35,8 @@
                 android:background="#FFF"
                 android:textSize="40sp"
                 android:ems="10"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textAlignment="center"
                 android:inputType="number" />
         </LinearLayout>
@@ -67,17 +69,25 @@
                     android:textSize="20sp"
                     android:text="Change Available Weights" />
 
+
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
+
+
     </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/frag"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
     </FrameLayout>
+
+
 </android.support.constraint.ConstraintLayout>

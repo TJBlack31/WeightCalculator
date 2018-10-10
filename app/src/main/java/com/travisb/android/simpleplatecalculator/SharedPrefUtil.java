@@ -53,6 +53,23 @@ public class SharedPrefUtil {
         editor.commit(); //4
     }
 
+    public static void saveLast(Integer lastWeight, Context context){
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = PreferenceManager.getDefaultSharedPreferences(context); //1
+        editor = settings.edit(); //2
+        editor.putInt("LAST", lastWeight); //3
+        editor.commit(); //4
+    }
+
+    public static int retrieveLast(Context context){
+        int available = 0;
+        SharedPreferences settings;
+        settings = PreferenceManager.getDefaultSharedPreferences(context);
+        available = settings.getInt("LAST", retrieveBar(context));
+        return available;
+    }
+
     public static int retrieveBar(Context context){
         int available = 0;
         SharedPreferences settings;
