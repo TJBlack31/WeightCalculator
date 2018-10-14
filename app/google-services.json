@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "535501692544",
+    "firebase_url": "https://simple-plate-calculator.firebaseio.com",
+    "project_id": "simple-plate-calculator",
+    "storage_bucket": "simple-plate-calculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535501692544:android:4f14564cb33f07b4",
+        "android_client_info": {
+          "package_name": "com.travisb.android.simpleplatecalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535501692544-385atredf4nvh1qkmpld7mbt3lebjsk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbSFalASukfRHwuw03gatDZzGhIjvnaqA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

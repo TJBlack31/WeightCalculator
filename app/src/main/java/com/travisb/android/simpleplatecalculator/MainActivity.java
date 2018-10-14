@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         FontUtil.setNoType(weightAmount, this);
 
 
-
+        AppRater.app_launched(this);
 
 
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 weightAmount.setText(String.format(Locale.getDefault(), "%d", last));
 
-                AppRater.app_launched(getBaseContext());
+
 
                 calculate(SharedPrefUtil.retrieveBar(getApplicationContext()), getAvailablePlates(), getBaseContext());
 
