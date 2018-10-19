@@ -1,6 +1,5 @@
 package com.travisb.android.simpleplatecalculator;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,10 +10,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     EditText weightAmount;
     FragmentTransaction ft;
     boolean isDisplayed;
-    WeightDisplay newFragment;
+    WeightDisplayLbs newFragment;
     TextView weightLabel;
     Button changeAvailableWeights;
     Button calculateWeight;
@@ -94,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                         if(newFragment != null) {
                             getSupportFragmentManager().beginTransaction().
                                     remove(getSupportFragmentManager().findFragmentById(R.id.frag)).commit();
+                            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             newFragment = null;
 
                         }else{
@@ -160,8 +158,9 @@ public class MainActivity extends AppCompatActivity {
     private void calculate(final double barWeight, final HashMap<String, Integer> availableWeights, final Context context){
 
         if(newFragment != null) {
+            System.out.println("called from calculate");
 
-            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             newFragment = null;
         }
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                    boolean isDisplayable = weightCalculator.configurePlates(weight, getApplicationContext());
                    if(isDisplayable) {
                        if(newFragment == null) {
-                           newFragment = WeightDisplay.newInstance(weight,barWeight, weightCalculator.getPlates45(), weightCalculator.getPlates35(),
+                           newFragment = WeightDisplayLbs.newInstance(weight,barWeight, weightCalculator.getPlates45(), weightCalculator.getPlates35(),
                                    weightCalculator.getPlates25(),
                                    weightCalculator.getPlates10(),
                                    weightCalculator.getPlates5(),
@@ -207,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                            getSupportFragmentManager().executePendingTransactions();
                            isDisplayed = true;
                            SharedPrefUtil.saveLast(weight, getApplicationContext());
+                           weightCalculator=null;
 
 
                        }

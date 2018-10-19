@@ -9,27 +9,22 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 
-public class WeightDisplay extends Fragment {
+public class WeightDisplayLbs extends Fragment {
 
     private static final String PARAM45 = "FRTYFVE";
     private static final String PARAM35 = "THRTFVE";
@@ -42,17 +37,18 @@ public class WeightDisplay extends Fragment {
     private String header;
 
     private AdView mAdView;
+    private ImageView[] imageViews;
 
-    public WeightDisplay() {
+    public WeightDisplayLbs() {
 
     }
 
-    public static WeightDisplay newInstance(int weight, int barWeight, int fortyFives, int thirtyFives, int twentyFives,
-                                            int tens,
-                                            int fives,
-                                            int twoPntFives ) {
-        WeightDisplay fragment = new WeightDisplay();
-//        System.gc();
+    public static WeightDisplayLbs newInstance(int weight, int barWeight, int fortyFives, int thirtyFives, int twentyFives,
+                                               int tens,
+                                               int fives,
+                                               int twoPntFives ) {
+        WeightDisplayLbs fragment = new WeightDisplayLbs();
+        System.gc();
         Bundle args = new Bundle();
         args.putInt("WEIGHT", weight);
         args.putInt("BAR", barWeight);
@@ -78,6 +74,7 @@ public class WeightDisplay extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_weight_display, container, false);
 
+
         if (getArguments() != null) {
 
             int[] quantityPlates = new int[]{getArguments().getInt(PARAM45),
@@ -101,7 +98,7 @@ public class WeightDisplay extends Fragment {
                     view.findViewById(R.id.linearLayout5lb),
                     view.findViewById(R.id.linearLayout2pnt5lb)};
 
-            ImageView[] imageViews = new ImageView[]{view.findViewById(R.id.imageView45),
+            this.imageViews = new ImageView[]{view.findViewById(R.id.imageView45),
                     view.findViewById(R.id.imageView35),
                     view.findViewById(R.id.imageView25),
                     view.findViewById(R.id.imageView10),
@@ -140,6 +137,8 @@ public class WeightDisplay extends Fragment {
 
                 }
             }, 1000);
+
+
 
 
 
@@ -203,6 +202,14 @@ public class WeightDisplay extends Fragment {
 
 
     }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        for(int i = 0; i<this.imageViews.length; i++){
+            this.imageViews[i] = null;
+        }
+    }
     private void setViews(TextView[]textViews, LinearLayout[]linearLayouts,
                           int[] quantityPlates, ImageView[]imageViews, int[]drawableResources, AdView mAdView){
         for(int i = 0; i<quantityPlates.length; i++){
@@ -212,8 +219,8 @@ public class WeightDisplay extends Fragment {
            }else{
                Drawable drawable = getResources().getDrawable(drawableResources[i]);
                imageViews[i].setAdjustViewBounds(true);
-               imageViews[i].setMaxHeight(50);
-               imageViews[i].setMaxWidth(50);
+               imageViews[i].setMaxHeight(30);
+               imageViews[i].setMaxWidth(30);
                imageViews[i].setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                imageViews[i].setImageDrawable(drawable);
                textViews[i].setText(Integer.toString(quantityPlates[i]));
