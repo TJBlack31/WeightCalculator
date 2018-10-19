@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -51,6 +52,7 @@ public class WeightDisplay extends Fragment {
                                             int fives,
                                             int twoPntFives ) {
         WeightDisplay fragment = new WeightDisplay();
+//        System.gc();
         Bundle args = new Bundle();
         args.putInt("WEIGHT", weight);
         args.putInt("BAR", barWeight);
@@ -106,22 +108,55 @@ public class WeightDisplay extends Fragment {
                     view.findViewById(R.id.imageView5),
                     view.findViewById(R.id.imageView2pnt5)};
 
+            int[] drawableResources = new int[]{R.drawable.plates45x1,
+                    R.drawable.plates35x1,
+                    R.drawable.plates25x1,
+                    R.drawable.plates10x1,
+                    R.drawable.plates5x1,
+                    R.drawable.plates2pnt5x1};
 
-            setViews(textViews, linearLayouts, quantityPlates, imageViews);
-
-            changeNoType(textViews);
-            final View mView = view;
-            Runnable runnable = new Runnable() {
 
 
+
+            final Handler handler = new Handler();
+            final View mView = view = view;
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    LinearLayout adViewLl = mView.findViewById(R.id.adviewLayout);
+
                     mAdView = (AdView) mView.findViewById(R.id.adView);
                     AdRequest adRequest = new AdRequest.Builder().build();
+
+                    //added these lines because for some reason on my device, fragment would
+                    //go blank when calling .loadAd() .  This was because
+                    // the views were being interupted by ad load. Solved it by insulating adView in its own layout.
+                    //the two methods below take a snapshot of the height and width of the wrapped adView
+                    //and then lock the layout to that size.
+                    adViewLl.setMinimumHeight(adViewLl.getHeight());
+                    adViewLl.setMinimumWidth(adViewLl.getWidth());
                     mAdView.loadAd(adRequest);
+
+
                 }
-            };
-            getActivity().runOnUiThread(runnable);
+            }, 1000);
+
+
+
+            setViews(textViews, linearLayouts, quantityPlates, imageViews, drawableResources, this.mAdView);
+
+            changeNoType(textViews);
+//            final View mView = view;
+//            Runnable runnable = new Runnable() {
+//
+//
+//                @Override
+//                public void run() {
+//
+//                }
+//            };
+//            getActivity().runOnUiThread(runnable);
+
 
 
             displayHeader = view.findViewById(R.id.displayHeader);
@@ -169,16 +204,24 @@ public class WeightDisplay extends Fragment {
 
     }
     private void setViews(TextView[]textViews, LinearLayout[]linearLayouts,
-                          int[] quantityPlates, ImageView[]imageViews){
+                          int[] quantityPlates, ImageView[]imageViews, int[]drawableResources, AdView mAdView){
         for(int i = 0; i<quantityPlates.length; i++){
            if(quantityPlates[i]==0){
                linearLayouts[i].removeAllViews();
                linearLayouts[i].setVisibility(View.GONE);
            }else{
+               Drawable drawable = getResources().getDrawable(drawableResources[i]);
+               imageViews[i].setAdjustViewBounds(true);
+               imageViews[i].setMaxHeight(50);
+               imageViews[i].setMaxWidth(50);
+               imageViews[i].setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+               imageViews[i].setImageDrawable(drawable);
                textViews[i].setText(Integer.toString(quantityPlates[i]));
 //               resizeImage(imageViews[i]);
            }
         }
+
+
     }
 
     private void resizeImage(ImageView imageView){

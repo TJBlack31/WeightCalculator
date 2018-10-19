@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
                            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_in_left);
                            ft.replace(R.id.frag, newFragment, "fragment");
                            ft.commit();
+                           getSupportFragmentManager().executePendingTransactions();
                            isDisplayed = true;
                            SharedPrefUtil.saveLast(weight, getApplicationContext());
 
