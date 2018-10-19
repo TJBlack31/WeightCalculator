@@ -45,6 +45,7 @@ public class EditWeightsDialog extends DialogFragment {
             editTexts[i].setText(Integer.toString(SharedPrefUtil.retrieveAvalable(WeightCalculator.WEIGHTS[i], getContext())));
 
         }
+
         for(int i = 0; i<textViews.length; i++){
             FontUtil.setNoType(editTexts[i], getContext());
             FontUtil.setTextType(textViews[i], getContext());
@@ -61,8 +62,11 @@ public class EditWeightsDialog extends DialogFragment {
                 for(int i = 0; i<WeightCalculator.WEIGHTS.length; i++){
                     String intString = editTexts[i].getText().toString();
                     int value = 0;
-                    if(!intString.equals("")){
+                    if(!intString.equals("") && intString.length() < 4){
                         value = Integer.parseInt(intString);
+                    }else{
+                        value = 10;
+                        editTexts[i].setText(String.format(Integer.toString(value)));
                     }
                     SharedPrefUtil.saveAvailable(WeightCalculator.WEIGHTS[i], value,
                             getContext());
