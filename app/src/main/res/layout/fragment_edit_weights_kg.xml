@@ -1,0 +1,366 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.travisb.android.simpleplatecalculator.MainActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:paddingBottom="0dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/editbarweightkg_txtview"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+
+                    android:textColor = "@android:color/white"
+                    android:textSize="20sp"
+                    android:text="@string/barWeight" />
+
+                    <EditText
+                        android:id="@+id/editBarWeightkg_editTxt"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:textColor = "@android:color/white"
+                        android:textAlignment="center"
+                        android:ems="10"
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textColor = "@android:color/white"
+                        android:paddingBottom="4dp"
+                        android:textSize="10sp"
+                        android:text="kgs"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="0dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/edit25kgtxtview"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:textColor = "@android:color/white"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:text="@string/plates25kg" />
+
+                    <EditText
+                        android:id="@+id/edit_weights25kg"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor = "@android:color/white"
+                        android:layout_weight="3"
+                        android:ems="10"
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="0dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/edit20kgtxtview"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor = "@android:color/white"
+                        android:textSize="20sp"
+                        android:text="@string/plates20kg" />
+
+                    <EditText
+                        android:id="@+id/edit_weights20kg"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_weight="3"
+                        android:textColor = "@android:color/white"
+                        android:ems="10"
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="0dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/edit15kgtxtview"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor = "@android:color/white"
+                        android:textSize="20sp"
+                        android:text="@string/plates15kg" />
+
+                    <EditText
+                        android:id="@+id/edit_weights15kg"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_weight="3"
+                        android:textColor = "@android:color/white"
+                        android:ems="10"
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="0dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/edit10kgtxtview"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor = "@android:color/white"
+                        android:textSize="20sp"
+                        android:text="@string/plates10kg" />
+
+                    <EditText
+                        android:id="@+id/edit_weights10kg"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_weight="3"
+                        android:textColor = "@android:color/white"
+                        android:ems="10"
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="0dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/edit5kgtxtview"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor = "@android:color/white"
+                        android:textSize="20sp"
+                        android:text="@string/plates5kg" />
+
+                    <EditText
+                        android:id="@+id/edit_weights5kg"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_weight="3"
+                        android:textColor = "@android:color/white"
+                        android:ems="10"
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
+
+                </LinearLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edit2pnt5kgtxtview"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor = "@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/plates2pnt5kg" />
+
+            <EditText
+                android:id="@+id/edit_weights2pnt5kg"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_weight="3"
+                android:textColor = "@android:color/white"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edit2kgtxtview"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor = "@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/plates2kg" />
+
+            <EditText
+                android:id="@+id/edit_weights2kg"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_weight="3"
+                android:textColor = "@android:color/white"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edit1pnt5kgtxtview"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor = "@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/plates1pnt5kg" />
+
+            <EditText
+                android:id="@+id/edit_weights1pnt5kg"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_weight="3"
+                android:textColor = "@android:color/white"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edit1kgtxtview"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor = "@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/plates1kg" />
+
+            <EditText
+                android:id="@+id/edit_weights1kg"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_weight="3"
+                android:textColor = "@android:color/white"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/editpnt5kgtxtview"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor = "@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/platespnt5kg" />
+
+            <EditText
+                android:id="@+id/edit_weightspnt5kg"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_weight="3"
+                android:textColor = "@android:color/white"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/saveWeights"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/close" />
+    </LinearLayout>
+</ScrollView>
+</FrameLayout>

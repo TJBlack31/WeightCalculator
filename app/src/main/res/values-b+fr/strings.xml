@@ -2,33 +2,35 @@
     <string name="app_name">Simple Plate Calculator</string>
     <string name="adId">ca-app-pub-7195037963255023~7393338006</string>
     <string name="adUnitId">ca-app-pub-7195037963255023/3592574231</string>
-    <string name="lbsSelected">You have selected pounds.</string>
-    <string name="kgsSelected">You have selected kilograms.</string>
+    <string name="lbsSelected">You have selected pounds as the unit of measure.</string>
+    <string name="kgsSelected">You have selected kilograms as the unit of measure.</string>
     <string name="enterWeightLbs">Enter Weight in LBS</string>
     <string name="enterWeightKgs">Enter Weight in KGS</string>
     <string name="notEnoughPlts">Not enough plates!</string>
-    <string name="exceedBar">entered weight must meet or exceed the weight of the bar!</string>
+    <string name="exceedBar">entered weight must meet or exceed bar weight.</string>
     <string name="calculate">Calculate</string>
     <string name="changeAvail">Change available weights</string>
     <string name="thisIsBar">This is your bar weight.</string>
     <string name="loadUp">Load these up on each side of the bar.</string>
     <string name="close">close</string>
-    <string name="barWeight">Bar Weight</string>
     <string name="plates25kg">25KG Plates</string>
     <string name="plates20kg">20KG Plates</string>
     <string name="plates15kg">15KG Plates</string>
     <string name="plates10kg">10KG Plates</string>
     <string name="plates5kg">5KG Plates</string>
     <string name="plates2pnt5kg">2.5KG Plates</string>
-    <string name="plates2kg">2KG Plates</string>
-    <string name="plates1pnt5kg">1.5KG Plates</string>
     <string name="plates1kg">1KG Plates</string>
     <string name="platespnt5kg">.5KG Plates</string>
+
     <string name="plates45lb">Available 45LB Plates</string>
     <string name="plates35lb">Available 35LB Plates</string>
     <string name="plates25lb">Available 25LB Plates</string>
     <string name="plates10lb">Available 10LB Plates</string>
     <string name="plates5lb">Available 5LB Plates</string>
     <string name="plates2pnt5lb">Available 2.5LB Plates</string>
+
+
+
+
 
 </resources>

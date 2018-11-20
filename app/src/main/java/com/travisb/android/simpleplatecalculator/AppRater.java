@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.travisb.android.simpleplatecalculator.utils.FontUtil;
+
 public class AppRater {
 
     private final static String APP_TITLE = "Simple Plate Calculator";// App Name

@@ -1,4 +1,4 @@
-package com.travisb.android.simpleplatecalculator;
+package com.travisb.android.simpleplatecalculator.utils;
 
 import android.app.Activity;
 import android.content.Context;

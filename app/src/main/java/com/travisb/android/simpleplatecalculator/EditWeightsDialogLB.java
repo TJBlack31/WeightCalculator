@@ -1,19 +1,24 @@
-package com.travisb.android.simpleplatecalculator.editdialogfragments;
+package com.travisb.android.simpleplatecalculator;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.travisb.android.simpleplatecalculator.R;
 import com.travisb.android.simpleplatecalculator.calculator.WeightCalculatorLB;
 import com.travisb.android.simpleplatecalculator.utils.FontUtil;
 import com.travisb.android.simpleplatecalculator.utils.SharedPrefUtil;
 
 
-public class EditWeightsDialogLB extends BaseEditDialog {
+public class EditWeightsDialogLB extends DialogFragment {
+
+    private Button saveButton;
+    EditText[] editTexts;
+    TextView[] textViews;
 
     public EditWeightsDialogLB() {
 
@@ -50,6 +55,7 @@ public class EditWeightsDialogLB extends BaseEditDialog {
                 editTexts[i].setText(Integer.toString(SharedPrefUtil.retrieveBarLB(getContext()).intValue()));
             }
         }
+        //todo: remove print statements and figure out shared pref issue
         FontUtil.setTextType(saveButton, getContext());
 
         saveButton.setOnClickListener(new View.OnClickListener() {
