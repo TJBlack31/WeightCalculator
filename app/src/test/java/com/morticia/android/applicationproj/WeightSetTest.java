@@ -1,8 +1,11 @@
 package com.morticia.android.applicationproj;
 
 import android.app.Activity;
+import android.content.Context;
 
+import com.travisb.android.simpleplatecalculator.DisplayUpdateCallback;
 import com.travisb.android.simpleplatecalculator.WeightCalculator;
+import com.travisb.android.simpleplatecalculator.calculator.WeightCalculatorLB;
 
 import org.junit.Test;
 import org.junit.runners.JUnit4;
@@ -21,15 +24,25 @@ public class WeightSetTest {
     public void configurePlates() throws Exception {
         HashMap<String, Integer> hashMap = new HashMap<>();
         HashMap<String, Integer> desiredResult = new HashMap<>();
-        for(int i = 0; i<WeightCalculator.WEIGHTS.length; i++){
-            hashMap.put(WeightCalculator.WEIGHTS[i], 10);
-            desiredResult.put(WeightCalculator.WEIGHTS[i],0);
+        for(int i = 0; i< WeightCalculatorLB.WEIGHTSLB.length; i++){
+            hashMap.put(WeightCalculatorLB.WEIGHTSLB[i], 10);
+            desiredResult.put(WeightCalculatorLB.WEIGHTSLB[i],0);
         }
-        desiredResult.put(WeightCalculator.WEIGHTS[0], 2);
+        desiredResult.put(WeightCalculatorLB.WEIGHTSLB[0], 2);
 
-        WeightCalculator weightSet = new WeightCalculator( 45, hashMap);
+        WeightCalculatorLB weightSet = new WeightCalculatorLB(45, hashMap, new DisplayUpdateCallback() {
+            @Override
+            public void onDisplayUpdate(String updatedText, boolean isDisplayable) {
 
-        weightSet.configurePlates(225);
+            }
+
+            @Override
+            public Context getActivityContext() {
+                return null;
+            }
+        });
+
+        weightSet.configure(225);
 
         assertEquals(desiredResult, weightSet.getWeightsUsed());
 

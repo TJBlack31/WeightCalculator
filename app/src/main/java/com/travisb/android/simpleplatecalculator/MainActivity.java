@@ -1,6 +1,7 @@
 package com.travisb.android.simpleplatecalculator;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -155,13 +156,14 @@ public class MainActivity extends AppCompatActivity  {
         switch (item.getItemId()) {
             case R.id.weightTypeItem:
                 if (isKg) {
+                    removeFrag();
                     item.setIcon(R.mipmap.kgicon);
                     item.setTitle("Kilograms");
 //                    item.setIcon(M)
                     setUpLbs();
                     presentFrag(getString(R.string.lbsSelected));
                 } else {
-
+                    removeFrag();
                     item.setIcon(R.mipmap.lbicon);
                     item.setTitle("Pounds");
                     setUpKgs();
@@ -228,8 +230,6 @@ public class MainActivity extends AppCompatActivity  {
     private void presentFrag(String headerText) {
 
         if (newFragment == null) {
-
-
             newFragment = new HeaderDisplay(headerText);
 
             ft = getSupportFragmentManager().beginTransaction();
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    private void calculateLb(final double barWeight, final HashMap<String, Integer> availableWeights, final Context context) {
+    private void calculateLb(final double barWeight, final HashMap<String, Integer> availableWeights) {
 
         final Runnable runnable = new Runnable() {
             @Override
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity  {
         } else {
 
             barWeight = SharedPrefUtil.retrieveBarLB(getApplicationContext());
-            calculateLb(barWeight, availableWeights, context);
+            calculateLb(barWeight, availableWeights);
         }
     }
 
@@ -388,8 +388,6 @@ public class MainActivity extends AppCompatActivity  {
             }
         }).start();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-
     }
 
     private void showEditDialog() {
@@ -403,13 +401,11 @@ public class MainActivity extends AppCompatActivity  {
             editWeightsDialog.show(fm, "fragment_edit_weights");
         }
     }
-    //todo: find out why edit weights dialog is returning zero for each weight
-    //todo: aview not showing
 
     private void checkFirstTime(boolean isKg) {
         if (SharedPrefUtil.isFirstTime(this, isKg)) {
             SharedPrefUtil.setKg(this, isKg);
-            //todo:figure out why when restarting app,KG switch doesn't remain on.
+
             if (isKg) {
 
                 for (String weight : WeightCalculatorKG.WEIGHTSKG) {
@@ -436,7 +432,7 @@ public class MainActivity extends AppCompatActivity  {
             int length = WeightCalculatorLB.WEIGHTSKG.length;
             for (int i = 0; i < length; i++) {
                 String key = WeightCalculatorLB.WEIGHTSKG[i];
-                plates.put(key, (int) SharedPrefUtil.retrieveAvalableKG(key, this));
+                plates.put(key, (int) SharedPrefUtil.retrieveAvalableKG(key, this)/2);
             }
             return plates;
         } else {
@@ -444,11 +440,10 @@ public class MainActivity extends AppCompatActivity  {
             int length = WeightCalculatorLB.WEIGHTSLB.length;
             for (int i = 0; i < length; i++) {
                 String key = WeightCalculatorLB.WEIGHTSLB[i];
-                System.out.println("from get available plates index of" + i + " " + " length of " + (int) SharedPrefUtil.retrieveAvalableLB(key, this));
-                plates.put(key, (int) SharedPrefUtil.retrieveAvalableLB(key, this));
+                System.out.println("from get available plates index of" + i + " " + " length of " );
+                plates.put(key, (int) SharedPrefUtil.retrieveAvalableLB(key, this)/2);
             }
             return plates;
         }
     }
-
 }

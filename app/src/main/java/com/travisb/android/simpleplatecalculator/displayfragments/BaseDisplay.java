@@ -17,6 +17,9 @@ import com.travisb.android.simpleplatecalculator.DisplayUpdateCallback;
 import com.travisb.android.simpleplatecalculator.R;
 import com.travisb.android.simpleplatecalculator.utils.FontUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class BaseDisplay extends Fragment implements DisplayUpdateCallback {
 
@@ -85,6 +88,7 @@ public abstract class BaseDisplay extends Fragment implements DisplayUpdateCallb
 
     protected void setViews(TextView[]textViews, LinearLayout[]linearLayouts,
                             int[] quantityPlates, ImageView[]imageViews, int[]drawableResources) {
+
         for (int i = 0; i < quantityPlates.length; i++) {
             if (quantityPlates[i] == 0) {
                 linearLayouts[i].removeAllViews();

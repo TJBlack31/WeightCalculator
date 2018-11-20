@@ -43,7 +43,7 @@ public class EditWeightsDialogLB extends DialogFragment {
                 view.findViewById(R.id.edit2pnt5txtview),
                 view.findViewById(R.id.editbarweight_txtview)};
 
-        for(int i = 0; i< WeightCalculatorLB.WEIGHTSLB.length; i++){
+        for(int i = 0; i< WeightCalculatorLB.WEIGHTSLB.length ; i++){
             editTexts[i].setText(Integer.toString((int)SharedPrefUtil.retrieveAvalableLB(WeightCalculatorLB.WEIGHTSLB[i], getContext())));
 
         }
@@ -63,6 +63,7 @@ public class EditWeightsDialogLB extends DialogFragment {
             public void onClick(View view) {
 
                 for(int i = 0; i< WeightCalculatorLB.WEIGHTSLB.length; i++){
+                    System.out.println(WeightCalculatorLB.WEIGHTSLB.length);
                     String intString = editTexts[i].getText().toString();
                     int value = 0;
                     if(!intString.equals("") && intString.length() < 4){

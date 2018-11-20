@@ -46,6 +46,8 @@ public abstract class WeightCalculator {
 
     public abstract double getAvalableWeight();
 
+    protected abstract void configure(double weightOfPlate, String key);
+
     public double getPlates45() {
         System.out.println(weightsUsed.get(WEIGHTSLB[0]) + " from 45");
         return weightsUsed.get(WEIGHTSLB[0]);

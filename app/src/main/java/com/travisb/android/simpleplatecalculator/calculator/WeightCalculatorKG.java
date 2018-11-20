@@ -32,15 +32,12 @@ public class WeightCalculatorKG extends WeightCalculator {
             //Maybe do a callback to the activity to send a toast or something
            displayNotEnough(this.displayUpdateCallback);
         }
-
-
         return true;
     }
 
-    private void trimAmount(String key, double amount){
-        if(isPlateDvsbl(amount)){
-            configure(amount, key);
-            System.out.println(weightsUsed.entrySet());
+    private void trimAmount(String key, double weightOfPlate){
+        if(isPlateDvsbl(weightOfPlate)){
+            configure(weightOfPlate, key);
         }else{
             weightsUsed.put(key, 0);
         }
@@ -94,19 +91,18 @@ public class WeightCalculatorKG extends WeightCalculator {
         }
         return weight;
     }
-
-    private void configure(double amount, String key){
+    @Override
+    protected void configure(double weightOfPlate, String key){
         double availablePlates = weightsUsed.get(key);
-        double divisiblePlatesNeeded = weightNoBarHalf/amount;
+        double divisiblePlatesNeeded = weightNoBarHalf/weightOfPlate;
         if (divisiblePlatesNeeded > availablePlates){
-            this.weightNoBarHalf = weightNoBarHalf - (availablePlates * amount);
+            this.weightNoBarHalf = weightNoBarHalf - (availablePlates * weightOfPlate);
         }
         else {
-            this.weightNoBarHalf = weightNoBarHalf % amount;
+            this.weightNoBarHalf = this.weightNoBarHalf % weightOfPlate;
             weightsUsed.put(key, (int)divisiblePlatesNeeded);
         }
     }
-
     public static HashMap<String, Integer> getWeightsUsed() {
         return weightsUsed;
     }

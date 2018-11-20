@@ -16,7 +16,7 @@ public class SharedPrefUtil {
         settings = PreferenceManager.getDefaultSharedPreferences(context); //1
         editor = settings.edit(); //2
         editor.putInt(key, (int) plateQnt); //3
-        System.out.println("length from shared pref save lbs " +plateQnt);
+        System.out.println("length from shared pref save lbs " +plateQnt + " " + key);
         editor.commit(); //4
     }
 
@@ -42,9 +42,7 @@ public class SharedPrefUtil {
         int available = 0;
         SharedPreferences settings;
         settings = PreferenceManager.getDefaultSharedPreferences(context);
-//        System.out.println()
         available = settings.getInt(key, 10);
-        System.out.println("length from shared pref retrieve lbs " +available );
         return available;
     }
 
@@ -53,12 +51,12 @@ public class SharedPrefUtil {
         SharedPreferences settings;
         settings = PreferenceManager.getDefaultSharedPreferences(context);
         if(isKG){
-            isFirstTime = settings.getBoolean("FIRST_TIMELB", true);
-
-        }else{
             isFirstTime = settings.getBoolean("FIRST_TIMEKG", true);
+        }else{
+            isFirstTime = settings.getBoolean("FIRST_TIMELB", true);
         }
         if(isFirstTime){
+            System.out.println("isFirstTime: " + isFirstTime);
             saveFirstTime(context, isKG);
         }
 
@@ -169,12 +167,6 @@ public class SharedPrefUtil {
     }
 
     public static Double retrieveBarKG(Context context){
-//        int available = 0;
-//        SharedPreferences settings;
-//        settings = PreferenceManager.getDefaultSharedPreferences(context);
-//        available = settings.getInt("BARKG", 20);
-//        return available;
-
         long available = 0;
         SharedPreferences settings;
         settings = PreferenceManager.getDefaultSharedPreferences(context);
