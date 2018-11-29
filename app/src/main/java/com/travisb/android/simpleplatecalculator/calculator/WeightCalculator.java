@@ -37,8 +37,8 @@ public abstract class WeightCalculator {
     }
 
     protected void displayNotEnough(DisplayUpdateCallback updateCallback){
-        String message = updateCallback.getActivityContext().getString(R.string.notEnoughPlts);
-        updateCallback.onDisplayUpdate(message, false);
+
+        updateCallback.onDisplayUpdate("NOTENOUGH", false);
     }
 
     public abstract boolean toPlates(double weight, DisplayUpdateCallback updateCallback);
@@ -46,7 +46,7 @@ public abstract class WeightCalculator {
 
     public abstract double getAvalableWeight();
 
-    protected abstract void configure(double weightOfPlate, String key);
+    protected abstract void countWeightsUsed(double weightOfPlate, String key);
 
     public double getPlates45() {
         System.out.println(weightsUsed.get(WEIGHTSLB[0]) + " from 45");

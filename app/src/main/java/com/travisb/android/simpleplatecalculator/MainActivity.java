@@ -1,12 +1,15 @@
 package com.travisb.android.simpleplatecalculator;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
 import com.travisb.android.simpleplatecalculator.displayfragments.BaseDisplay;
 import com.travisb.android.simpleplatecalculator.displayfragments.HeaderDisplay;
 import com.travisb.android.simpleplatecalculator.displayfragments.WeightDisplayKG;
@@ -32,34 +36,36 @@ import com.travisb.android.simpleplatecalculator.utils.FontUtil;
 import com.travisb.android.simpleplatecalculator.utils.KeyboardUtil;
 import com.travisb.android.simpleplatecalculator.utils.SharedPrefUtil;
 
+
 import java.util.HashMap;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements OnThemeChangeCallback {
 
     EditText weightAmount;
     FragmentTransaction ft;
     boolean isDisplayed;
-    BaseDisplay newFragment;
+    BaseDisplay plateFragment;
     TextView weightLabel;
     Button changeAvailableWeights;
     Button calculateWeight;
+    CardView buttonCardView;
     boolean isKg;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//
-
-
-        setTheme(R.style.AppTheme);
+        MobileAds.initialize(this, getString(R.string.adId));
         setContentView(R.layout.activity_main);
+
         weightLabel = findViewById(R.id.weightLabel);
         changeAvailableWeights = findViewById(R.id.availableWeights);
         weightAmount = findViewById(R.id.weightAmount);
         calculateWeight = findViewById(R.id.calculateButton);
+        buttonCardView = findViewById(R.id.buttonCard);
 
         FontUtil.setTextType(weightLabel, this);
         FontUtil.setTextType(changeAvailableWeights, this);
@@ -68,12 +74,10 @@ public class MainActivity extends AppCompatActivity  {
 
         AppRater.app_launched(this);
 
-
-        Runnable runnable = new Runnable() {
+        final Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 double last = 0;
-                final double barWeight;
                 isKg = SharedPrefUtil.isKg(getBaseContext());
                 checkFirstTime(isKg);
                 if (isKg) {
@@ -81,23 +85,21 @@ public class MainActivity extends AppCompatActivity  {
                         setUpKgs();
                         last = SharedPrefUtil.retrieveLastKG(getBaseContext());
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
-                    barWeight = SharedPrefUtil.retrieveBarKG(getApplicationContext());
                 } else {
                     try {
                         setUpLbs();
                         last = SharedPrefUtil.retrieveLastLB(getBaseContext());
-
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
-                    barWeight = SharedPrefUtil.retrieveBarLB(getApplicationContext());
                 }
+
                 weightAmount.setText(String.format(Locale.getDefault(), "%d", (int) last));
 
                 try {
-                    Thread.sleep(250);
+                    Thread.sleep(25);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity  {
                         calculate(getAvailablePlates(isKg), getBaseContext());
                     }
                 });
+
                 weightAmount.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -132,8 +135,13 @@ public class MainActivity extends AppCompatActivity  {
                 });
             }
         };
-        Thread thread = new Thread(runnable);
-        thread.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(runnable);
+            }
+        }).start();
+
     }
 
     @Override
@@ -152,14 +160,13 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean isKg = SharedPrefUtil.isKg(this);
-        checkFirstTime(isKg);
+        checkFirstTime(isKg,true);
         switch (item.getItemId()) {
             case R.id.weightTypeItem:
                 if (isKg) {
                     removeFrag();
                     item.setIcon(R.mipmap.kgicon);
                     item.setTitle("Kilograms");
-//                    item.setIcon(M)
                     setUpLbs();
                     presentFrag(getString(R.string.lbsSelected));
                 } else {
@@ -171,7 +178,8 @@ public class MainActivity extends AppCompatActivity  {
                 }
                 break;
 
-        }
+            }
+
         return true;
     }
 
@@ -187,8 +195,6 @@ public class MainActivity extends AppCompatActivity  {
         weightLabel.setText(getString(R.string.enterWeightKgs));
     }
 
-
-    //todo: what's up with no ads
     @Override
     public void onPause() {
         super.onPause();
@@ -196,32 +202,37 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     private void removeFrag() {
-        if (newFragment != null) {
+        if (plateFragment != null) {
             getSupportFragmentManager().beginTransaction().
                     remove(getSupportFragmentManager().findFragmentById(R.id.frag)).commit();
             getSupportFragmentManager().popBackStack(null,
                     FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            newFragment = null;
+            plateFragment = null;
         }
     }
 
     private void presentFrag(WeightCalculator weightCalculator, double weight, double barWeight) {
 
-        if (newFragment == null) {
+        if (plateFragment == null) {
             if (!isKg) {
-                newFragment = WeightDisplayLbs.newInstance(weight, barWeight,
+                plateFragment = WeightDisplayLbs.newInstance(weight, barWeight,
                         weightCalculator);
+                SharedPrefUtil.saveLastLB(weight, getApplicationContext());
             } else {
-                newFragment = WeightDisplayKG.newInstance(weight, barWeight, weightCalculator);
+                plateFragment = WeightDisplayKG.newInstance(weight, barWeight, weightCalculator);
+                SharedPrefUtil.saveLastKG(weight, getApplicationContext());
             }
-
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_in_left);
-            ft.replace(R.id.frag, newFragment, "fragment");
-            ft.commit();
+            new Handler().post(new Runnable() {
+                public void run() {
+                    ft = getSupportFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_in_left);
+                    ft.replace(R.id.frag, plateFragment, "fragment");
+                    ft.commit();
+                }
+            });
             getSupportFragmentManager().executePendingTransactions();
             isDisplayed = true;
-            SharedPrefUtil.saveLastLB(weight, getApplicationContext());
+
 
 
         }
@@ -229,13 +240,19 @@ public class MainActivity extends AppCompatActivity  {
 
     private void presentFrag(String headerText) {
 
-        if (newFragment == null) {
-            newFragment = new HeaderDisplay(headerText);
+        if (plateFragment == null) {
+            plateFragment = new HeaderDisplay(headerText);
 
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_in_left);
-            ft.replace(R.id.frag, newFragment, "fragment");
-            ft.commit();
+            new Handler().post(new Runnable() {
+                public void run() {
+                    ft = getSupportFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_in_left);
+                    ft.replace(R.id.frag, plateFragment, "fragment");
+                    ft.commit();
+                }
+            });
+
+
             getSupportFragmentManager().executePendingTransactions();
             isDisplayed = true;
         }
@@ -250,7 +267,10 @@ public class MainActivity extends AppCompatActivity  {
                 WeightCalculatorLB weightCalculator = new WeightCalculatorLB(barWeight, availableWeights, new DisplayUpdateCallback() {
                     @Override
                     public void onDisplayUpdate(String updatedText, boolean isDisplayable) {
-                        newFragment.onDisplayUpdate(updatedText, true);
+                        plateFragment.onDisplayUpdate(updatedText, true);
+                        if(updatedText.equals("NOTENOUGH")){
+                            presentFrag(getString(R.string.notEnoughPlts));
+                        }
                     }
 
                     @Override
@@ -310,7 +330,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     private void calculate(final HashMap<String, Integer> availableWeights, final Context context) {
-        if (newFragment != null) {
+        if (plateFragment != null) {
             removeFrag();
         }
         Double barWeight;
@@ -325,7 +345,6 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    //todo: right when app starts icon is set wrong, but once clicked it switches directly
     private void calculateKg(final double barWeight, final HashMap<String, Integer> availableWeights, final Context context) {
 
         final Runnable runnable = new Runnable() {
@@ -336,7 +355,7 @@ public class MainActivity extends AppCompatActivity  {
                 WeightCalculatorKG weightCalculator = new WeightCalculatorKG(barWeight, availableWeights, new DisplayUpdateCallback() {
                     @Override
                     public void onDisplayUpdate(String updatedText, boolean isDisplayable) {
-                        newFragment.onDisplayUpdate(updatedText, true);
+                        plateFragment.onDisplayUpdate(updatedText, true);
                     }
 
                     @Override
@@ -415,35 +434,62 @@ public class MainActivity extends AppCompatActivity  {
                 }
             } else {
                 for (String weight : WeightCalculatorLB.WEIGHTSLB) {
-                    System.out.println("length from main");
                     SharedPrefUtil.saveAvailableLB(weight, 10, this);
                     SharedPrefUtil.saveBarLB(45, this);
                     weightAmount.setText(Integer.toString(20));
                 }
             }
+        }
+        calculate(getAvailablePlates(isKg), this);
+    }
+    private void checkFirstTime(boolean isKg, boolean fromSwitch) {
+        if (SharedPrefUtil.isFirstTime(this, isKg)) {
+            SharedPrefUtil.setKg(this, isKg);
 
+            if (isKg) {
+
+                for (String weight : WeightCalculatorKG.WEIGHTSKG) {
+                    SharedPrefUtil.saveAvailableKG(weight, 10, this);
+                    SharedPrefUtil.saveBarKG(20, this);
+                    weightAmount.setText(Integer.toString(20));
+                }
+            } else {
+                for (String weight : WeightCalculatorLB.WEIGHTSLB) {
+                    SharedPrefUtil.saveAvailableLB(weight, 10, this);
+                    SharedPrefUtil.saveBarLB(45, this);
+                    weightAmount.setText(Integer.toString(20));
+                }
+            }
         }
     }
 
 
+
     private HashMap<String, Integer> getAvailablePlates(boolean isKg) {
+        int intoOneSide = 2;
         if (isKg) {
             HashMap<String, Integer> plates = new HashMap<>();
-            int length = WeightCalculatorLB.WEIGHTSKG.length;
+            int length = WeightCalculator.WEIGHTSKG.length;
             for (int i = 0; i < length; i++) {
-                String key = WeightCalculatorLB.WEIGHTSKG[i];
-                plates.put(key, (int) SharedPrefUtil.retrieveAvalableKG(key, this)/2);
+                String key = WeightCalculator.WEIGHTSKG[i];
+                plates.put(key, (int) SharedPrefUtil.retrieveAvalableKG(key, this)/intoOneSide);
             }
             return plates;
         } else {
             HashMap<String, Integer> plates = new HashMap<>();
-            int length = WeightCalculatorLB.WEIGHTSLB.length;
+            int length = WeightCalculator.WEIGHTSLB.length;
             for (int i = 0; i < length; i++) {
-                String key = WeightCalculatorLB.WEIGHTSLB[i];
-                System.out.println("from get available plates index of" + i + " " + " length of " );
-                plates.put(key, (int) SharedPrefUtil.retrieveAvalableLB(key, this)/2);
+                String key = WeightCalculator.WEIGHTSLB[i];
+                plates.put(key, (int) SharedPrefUtil.retrieveAvalableLB(key, this)/intoOneSide);
+                //amount is divided by two because calculator displays weights for one side of the barbell
             }
+
             return plates;
         }
+    }
+
+    @Override
+    public void onThemeChange(int colorResource) {
+        buttonCardView.setCardBackgroundColor(colorResource);
     }
 }

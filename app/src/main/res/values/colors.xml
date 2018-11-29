@@ -3,4 +3,12 @@
     <color name="colorPrimary">#607d8b</color>
     <color name="colorPrimaryDark">#34515e</color>
     <color name="colorAccent">#8eacbb</color>
+
+    <color name="colorPrimary_Rose">#f48fb1</color>
+    <color name="colorPrimaryDark_Rose">#bf5f82</color>
+    <color name="colorAccent_Rose">#ffc1e3</color>
+
+    <color name="colorPrimary_Fonz">#607d8b</color>
+    <color name="colorPrimaryDark_Fonz">#34515e</color>
+    <color name="colorAccent_Fonz">#8eacbb</color>
 </resources>

@@ -34,36 +34,30 @@ public class WeightCalculatorLB extends WeightCalculator{
     }
 
     @Override
-    protected void configure(final double weightOfPlate, final String key){
+    protected void countWeightsUsed(final double weightOfPlate, final String key){
         int availablePlates = weightsUsed.get(key);
         int divisiblePlatesNeeded = (int) (weightNoBarHalf/weightOfPlate);
-        if(!(divisiblePlatesNeeded % 2 == 0)){
-            divisiblePlatesNeeded = divisiblePlatesNeeded ;
-        }
-            if (divisiblePlatesNeeded > availablePlates){
+
+        if (divisiblePlatesNeeded > availablePlates){
             this.weightNoBarHalf = weightNoBarHalf - (availablePlates * weightOfPlate);
         }
         else {
-
             this.weightNoBarHalf = weightNoBarHalf % weightOfPlate;
-
-                weightsUsed.put(key, divisiblePlatesNeeded);
-
+            weightsUsed.put(key, divisiblePlatesNeeded);
         }
-
     }
 
 
 
     private void trimAmount(final String key, final double weightOfPlate){
-        if(isPlateDvsbl((int)weightOfPlate)){
-            configure(weightOfPlate, key);
+        if(hasRemaining((int)weightOfPlate)){
+            countWeightsUsed(weightOfPlate, key);
         }else{
             weightsUsed.put(key, 0);
         }
     }
 
-    private boolean isPlateDvsbl(final int plateWeight ){
+    private boolean hasRemaining(final int plateWeight ){
         if(this.weightNoBarHalf / plateWeight >= 1){
             return true;
         }

@@ -1,12 +1,11 @@
 package com.travisb.android.simpleplatecalculator.calculator;
 
 import com.travisb.android.simpleplatecalculator.DisplayUpdateCallback;
-import com.travisb.android.simpleplatecalculator.R;
+
 
 import java.util.HashMap;
 
 public class WeightCalculatorKG extends WeightCalculator {
-
 
     public WeightCalculatorKG(double barWeight, HashMap<String, Integer> availableWeights, DisplayUpdateCallback updateCallback) {
         super(barWeight, availableWeights, updateCallback);
@@ -27,23 +26,21 @@ public class WeightCalculatorKG extends WeightCalculator {
         trimAmount(WEIGHTSKG[8], 1);
         trimAmount(WEIGHTSKG[9], 0.5);
 
-
         if(this.weightNoBarHalf > 3){
-            //Maybe do a callback to the activity to send a toast or something
            displayNotEnough(this.displayUpdateCallback);
         }
         return true;
     }
 
     private void trimAmount(String key, double weightOfPlate){
-        if(isPlateDvsbl(weightOfPlate)){
-            configure(weightOfPlate, key);
+        if(hasRemaining(weightOfPlate)){
+            countWeightsUsed(weightOfPlate, key);
         }else{
             weightsUsed.put(key, 0);
         }
     }
 
-    private boolean isPlateDvsbl(double plateWeight ){
+    private boolean hasRemaining(double plateWeight ){
         if(this.weightNoBarHalf / plateWeight >= .5){
             return true;
         }
@@ -92,7 +89,7 @@ public class WeightCalculatorKG extends WeightCalculator {
         return weight;
     }
     @Override
-    protected void configure(double weightOfPlate, String key){
+    protected void countWeightsUsed(double weightOfPlate, String key){
         double availablePlates = weightsUsed.get(key);
         double divisiblePlatesNeeded = weightNoBarHalf/weightOfPlate;
         if (divisiblePlatesNeeded > availablePlates){

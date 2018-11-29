@@ -17,10 +17,6 @@ import com.travisb.android.simpleplatecalculator.DisplayUpdateCallback;
 import com.travisb.android.simpleplatecalculator.R;
 import com.travisb.android.simpleplatecalculator.utils.FontUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 public abstract class BaseDisplay extends Fragment implements DisplayUpdateCallback {
 
     protected static final String PARAMKG25 = "TWENTYFVEKG";
@@ -78,7 +74,6 @@ public abstract class BaseDisplay extends Fragment implements DisplayUpdateCallb
 
                     }
 
-                    // ...other AnimationListener methods go here...
                 });
             }
         }
@@ -124,9 +119,9 @@ public abstract class BaseDisplay extends Fragment implements DisplayUpdateCallb
     public void setDisplayHeader(boolean isBarWeight){
         if(isBarWeight) {
 
-            displayHeader.setText("This is your bar weight.");
+            displayHeader.setText(getString(R.string.thisIsBar));
         }else{
-            displayHeader.setText("Load these up on each side of the bar");
+            displayHeader.setText(getString(R.string.loadUp));
         }
     }
 

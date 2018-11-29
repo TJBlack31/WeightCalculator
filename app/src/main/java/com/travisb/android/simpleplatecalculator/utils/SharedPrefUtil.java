@@ -89,6 +89,23 @@ public class SharedPrefUtil {
         editor.commit(); //4
     }
 
+    public static void saveTheme(String theme, Context context){
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = PreferenceManager.getDefaultSharedPreferences(context); //1
+        editor = settings.edit(); //2
+        editor.putString("THEME", theme); //3
+        editor.commit(); //4
+    }
+
+    public static String retrieveTheme(Context context){
+        String theme = "";
+        SharedPreferences settings;
+        settings = PreferenceManager.getDefaultSharedPreferences(context);
+        theme = settings.getString("THEME", "DEFAULT");
+        return theme;
+    }
+
     public static void saveLastLB(double lastWeight, Context context){
         SharedPreferences settings;
         SharedPreferences.Editor editor;
