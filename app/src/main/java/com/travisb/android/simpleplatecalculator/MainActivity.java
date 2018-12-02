@@ -27,6 +27,7 @@ import com.travisb.android.simpleplatecalculator.displayfragments.BaseDisplay;
 import com.travisb.android.simpleplatecalculator.displayfragments.HeaderDisplay;
 import com.travisb.android.simpleplatecalculator.displayfragments.WeightDisplayKG;
 import com.travisb.android.simpleplatecalculator.displayfragments.WeightDisplayLbs;
+import com.travisb.android.simpleplatecalculator.editdialogfragments.BaseEditDialog;
 import com.travisb.android.simpleplatecalculator.editdialogfragments.EditWeightsDialogKG;
 import com.travisb.android.simpleplatecalculator.editdialogfragments.EditWeightsDialogLB;
 import com.travisb.android.simpleplatecalculator.calculator.WeightCalculator;
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnThemeChangeCall
                 changeAvailableWeights.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showEditDialog();
+                        presentEditDialog();
                     }
                 });
             }
@@ -160,21 +161,17 @@ public class MainActivity extends AppCompatActivity implements OnThemeChangeCall
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean isKg = SharedPrefUtil.isKg(this);
-        checkFirstTime(isKg,true);
+        checkFirstTime(isKg);
         switch (item.getItemId()) {
             case R.id.weightTypeItem:
                 if (isKg) {
-                    removeFrag();
-                    item.setIcon(R.mipmap.kgicon);
-                    item.setTitle("Kilograms");
+                    swapIcon("Kilograms", R.mipmap.kgicon, item);
                     setUpLbs();
-                    presentFrag(getString(R.string.lbsSelected));
+
                 } else {
-                    removeFrag();
-                    item.setIcon(R.mipmap.lbicon);
-                    item.setTitle("Pounds");
-                    setUpKgs();
-                    presentFrag(getString(R.string.kgsSelected));
+
+                    swapIcon("Pounds", R.mipmap.lbicon, item);
+                   setUpKgs();
                 }
                 break;
 
@@ -183,16 +180,24 @@ public class MainActivity extends AppCompatActivity implements OnThemeChangeCall
         return true;
     }
 
+    private void swapIcon(final String weightType, final int mipmapRes, final MenuItem item){
+        removeFrag();
+        item.setIcon(mipmapRes);
+        item.setTitle(weightType);
+    }
+
     private void setUpLbs() {
         isKg = false;
         SharedPrefUtil.setKg(this, false);
         weightLabel.setText(getString(R.string.enterWeightLbs));
+        presentFrag(getString(R.string.lbsSelected));
     }
 
     private void setUpKgs() {
-        SharedPrefUtil.setKg(this, true);
         isKg = true;
+        SharedPrefUtil.setKg(this, true);
         weightLabel.setText(getString(R.string.enterWeightKgs));
+        presentFrag(getString(R.string.kgsSelected));
     }
 
     @Override
@@ -252,7 +257,6 @@ public class MainActivity extends AppCompatActivity implements OnThemeChangeCall
                 }
             });
 
-
             getSupportFragmentManager().executePendingTransactions();
             isDisplayed = true;
         }
@@ -283,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements OnThemeChangeCall
 
                 try {
                     weight = Integer.parseInt(weightAmount.getText().toString());
-                } catch (NumberFormatException ex) { // handle your exception
+                } catch (NumberFormatException ex) {
 
                 }
                 if (weight < barWeight) {
@@ -373,7 +377,6 @@ public class MainActivity extends AppCompatActivity implements OnThemeChangeCall
                 }
                 if (weight < barWeight) {
                     presentFrag(getString(R.string.exceedBar));
-
                 }
                 if (weight >= barWeight && weight
                         <= weightCalculator.getAvalableWeight()) {
@@ -409,83 +412,70 @@ public class MainActivity extends AppCompatActivity implements OnThemeChangeCall
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    private void showEditDialog() {
+    private void presentEditDialog() {
         if (isKg) {
-            FragmentManager fm = getSupportFragmentManager();
-            EditWeightsDialogKG editWeightsDialog = new EditWeightsDialogKG();
-            editWeightsDialog.show(fm, "fragment_edit_weights_kg");
+            displayEditDialog("fragment_edit_weights_kg", new EditWeightsDialogKG());
         } else {
-            FragmentManager fm = getSupportFragmentManager();
-            EditWeightsDialogLB editWeightsDialog = new EditWeightsDialogLB();
-            editWeightsDialog.show(fm, "fragment_edit_weights");
+            displayEditDialog("fragment_edit_weights", new EditWeightsDialogLB());
         }
     }
+
+    private void displayEditDialog(final String tag, final BaseEditDialog dialog){
+        FragmentManager fm = getSupportFragmentManager();
+        BaseEditDialog editWeightsDialog = dialog;
+        editWeightsDialog.show(fm, tag);
+
+    }
+
 
     private void checkFirstTime(boolean isKg) {
         if (SharedPrefUtil.isFirstTime(this, isKg)) {
             SharedPrefUtil.setKg(this, isKg);
 
             if (isKg) {
-
-                for (String weight : WeightCalculatorKG.WEIGHTSKG) {
-                    SharedPrefUtil.saveAvailableKG(weight, 10, this);
-                    SharedPrefUtil.saveBarKG(20, this);
-                    weightAmount.setText(Integer.toString(20));
-                }
+                createNewSet(WeightCalculator.WEIGHTSKG, 10, 20);
             } else {
-                for (String weight : WeightCalculatorLB.WEIGHTSLB) {
-                    SharedPrefUtil.saveAvailableLB(weight, 10, this);
-                    SharedPrefUtil.saveBarLB(45, this);
-                    weightAmount.setText(Integer.toString(20));
-                }
+                createNewSet(WeightCalculator.WEIGHTSLB, 10, 45);
             }
-        }
-        calculate(getAvailablePlates(isKg), this);
-    }
-    private void checkFirstTime(boolean isKg, boolean fromSwitch) {
-        if (SharedPrefUtil.isFirstTime(this, isKg)) {
-            SharedPrefUtil.setKg(this, isKg);
-
-            if (isKg) {
-
-                for (String weight : WeightCalculatorKG.WEIGHTSKG) {
-                    SharedPrefUtil.saveAvailableKG(weight, 10, this);
-                    SharedPrefUtil.saveBarKG(20, this);
-                    weightAmount.setText(Integer.toString(20));
-                }
-            } else {
-                for (String weight : WeightCalculatorLB.WEIGHTSLB) {
-                    SharedPrefUtil.saveAvailableLB(weight, 10, this);
-                    SharedPrefUtil.saveBarLB(45, this);
-                    weightAmount.setText(Integer.toString(20));
-                }
-            }
+            calculate(getAvailablePlates(isKg), this);
         }
     }
 
+
+
+
+    private void createNewSet(final String[] weights, final int plateQnt, final int barWeight){
+
+        for (String weight : weights) {
+            SharedPrefUtil.saveAvailableKG(weight, plateQnt, this);
+            SharedPrefUtil.saveBarKG(barWeight, this);
+            weightAmount.setText(Integer.toString(barWeight));
+        }
+    }
 
 
     private HashMap<String, Integer> getAvailablePlates(boolean isKg) {
-        int intoOneSide = 2;
+        HashMap<String, Integer> plates;
         if (isKg) {
-            HashMap<String, Integer> plates = new HashMap<>();
-            int length = WeightCalculator.WEIGHTSKG.length;
-            for (int i = 0; i < length; i++) {
-                String key = WeightCalculator.WEIGHTSKG[i];
-                plates.put(key, (int) SharedPrefUtil.retrieveAvalableKG(key, this)/intoOneSide);
-            }
-            return plates;
+           plates = countFromSharedPref(WeightCalculator.WEIGHTSKG);
         } else {
-            HashMap<String, Integer> plates = new HashMap<>();
-            int length = WeightCalculator.WEIGHTSLB.length;
-            for (int i = 0; i < length; i++) {
-                String key = WeightCalculator.WEIGHTSLB[i];
-                plates.put(key, (int) SharedPrefUtil.retrieveAvalableLB(key, this)/intoOneSide);
-                //amount is divided by two because calculator displays weights for one side of the barbell
-            }
-
-            return plates;
+            plates = countFromSharedPref(WeightCalculator.WEIGHTSLB);
         }
+        return plates;
+    }
+
+    private HashMap<String, Integer> countFromSharedPref (final String[] keyArray){
+
+        int intoOneSide = 2;
+        HashMap<String, Integer> plates = new HashMap<>();
+        int length = keyArray.length;
+        for (int i = 0; i < length; i++) {
+            String key = keyArray[i];
+            plates.put(key, (int) SharedPrefUtil.retrieveAvalableLB(key, this)/intoOneSide);
+            //amount is divided by two because calculator displays weights for one side of the barbell
+        }
+
+        return plates;
     }
 
     @Override

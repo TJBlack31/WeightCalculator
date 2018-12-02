@@ -49,33 +49,26 @@ public abstract class WeightCalculator {
     protected abstract void countWeightsUsed(double weightOfPlate, String key);
 
     public double getPlates45() {
-        System.out.println(weightsUsed.get(WEIGHTSLB[0]) + " from 45");
         return weightsUsed.get(WEIGHTSLB[0]);
     }
 
     public double getPlates35() {
-
-        System.out.println(weightsUsed.get(WEIGHTSLB[1]) + " from 35");
         return weightsUsed.get(WEIGHTSLB[1]);
     }
 
     public double getPlates25() {
-        System.out.println(weightsUsed.get(WEIGHTSLB[2]) + " from 25");
         return weightsUsed.get(WEIGHTSLB[2]);
     }
 
     public double getPlates10() {
-        System.out.println(weightsUsed.get(WEIGHTSLB[3]) + " from 10");
         return weightsUsed.get(WEIGHTSLB[3]);
     }
 
     public double getPlates5() {
-        System.out.println(weightsUsed.get(WEIGHTSLB[4]) + " from 5");
         return weightsUsed.get(WEIGHTSLB[4]);
     }
 
     public double getPlates2pnt5() {
-        System.out.println(weightsUsed.get(WEIGHTSLB[5]) + " from 2pnt5");
         return weightsUsed.get(WEIGHTSLB[5]);
     }
 

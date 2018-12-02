@@ -100,8 +100,5 @@ public class WeightCalculatorKG extends WeightCalculator {
             weightsUsed.put(key, (int)divisiblePlatesNeeded);
         }
     }
-    public static HashMap<String, Integer> getWeightsUsed() {
-        return weightsUsed;
-    }
 
 }
